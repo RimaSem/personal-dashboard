@@ -4,15 +4,17 @@ import "./App.scss";
 
 function App() {
   const [time, setTime] = useState(new Date());
+  const APIkey = "13e50692f650e4663cbb5ad7302e4d31";
 
+  // Refresh current time at interval of 1 second
   useEffect(() => {
     const interval = setInterval(() => {
       setTime(new Date());
     }, 1000);
-
     return () => clearInterval(interval);
   }, []);
 
+  // Get background image and image author
   useEffect(() => {
     (
       document.querySelector(".App") as HTMLElement
@@ -35,6 +37,7 @@ function App() {
     //   });
   }, []);
 
+  // Get crypto data
   useEffect(() => {
     fetch("https://api.coingecko.com/api/v3/coins/dogecoin")
       .then((res) => {
@@ -65,6 +68,48 @@ function App() {
       });
   }, []);
 
+  // Get weather and city data
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((data) => {
+      fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${data.coords.latitude}&lon=${data.coords.longitude}&appid=${APIkey}&units=metric`,
+        { mode: "cors" }
+      )
+        .then((res) => {
+          if (!res.ok) {
+            throw Error("Weather data not available");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+          (
+            document.querySelector(".weather-icon") as HTMLImageElement
+          ).src = `https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@4x.png`;
+          (
+            document.querySelector(".temperature") as HTMLImageElement
+          ).textContent = `${Math.round(+data.list[0].main.temp)}°`;
+          fetch(
+            `http://api.openweathermap.org/geo/1.0/reverse?lat=55.6859392&lon=21.1484672&limit=5&appid=13e50692f650e4663cbb5ad7302e4d31`
+          )
+            .then((res) => {
+              if (!res.ok) {
+                throw Error("City not available");
+              }
+              return res.json();
+            })
+            .then(
+              (yourCity) =>
+                ((
+                  document.querySelector(".city") as HTMLImageElement
+                ).textContent = yourCity[0].name)
+            )
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
+    });
+  }, []);
+
   return (
     <div className="App">
       <div className="crypto-weather-container">
@@ -77,7 +122,13 @@ function App() {
           <p className="price dogecoin-highest"></p>
           <p className="price dogecoin-lowest"></p>
         </div>
-        <p>Weather</p>
+        <div className="weather-wrapper">
+          <div className="weather-top">
+            <img src="" className="weather-icon" alt="weather icon" />
+            <p className="temperature"></p>
+          </div>
+          <p className="city"></p>
+        </div>
       </div>
       <h1>
         {time.toLocaleTimeString([], {
