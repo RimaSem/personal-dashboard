@@ -5,4 +5,33 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1em;
+
+  .crypto-weather-container {
+    display: flex;
+    justify-content: space-between;
+
+    .crypto-wrapper {
+      .crypto-top-section {
+        display: flex;
+        gap: 0.7em;
+        margin-bottom: 0.5em;
+      }
+
+      .price {
+        margin: 0.2em 0 0 0;
+      }
+    }
+  }
+
+  h1 {
+    align-self: center;
+  }
+
+  .img-author {
+    align-self: flex-start;
+  }
 }
