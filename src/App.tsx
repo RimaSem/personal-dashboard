@@ -3,6 +3,16 @@ import bg from "./assets/placeholder_img.jpeg";
 import "./App.scss";
 
 function App() {
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     (
       document.querySelector(".App") as HTMLElement
@@ -69,7 +79,13 @@ function App() {
         </div>
         <p>Weather</p>
       </div>
-      <h1>TIME HERE</h1>
+      <h1>
+        {time.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        })}
+      </h1>
       <div className="img-author">Image author: Jane Doe</div>
     </div>
   );
