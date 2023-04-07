@@ -15,7 +15,6 @@
     justify-content: space-between;
 
     .crypto-wrapper {
-      font-size: 1.3rem;
       .crypto-top-section {
         display: flex;
         align-items: center;
@@ -64,7 +63,7 @@
   }
 
   h1 {
-    margin-bottom: 3em;
+    margin-bottom: 2.5em;
     font-size: 5rem;
     align-self: center;
   }
@@ -84,9 +83,63 @@
       .todo-list-icon {
         width: 70px;
         transition: scale 300ms;
+        margin-bottom: -5px;
 
         &:hover {
           scale: 1.1;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .App {
+    .crypto-weather-container {
+      .crypto-wrapper {
+        font-size: 0.9rem;
+        .crypto-top-section {
+          .dogecoin-img {
+            width: 2.5em;
+          }
+          .dogecoin-name {
+            font-size: 1rem;
+          }
+        }
+      }
+
+      .weather-wrapper {
+        .weather-top {
+          .weather-icon {
+            width: 40px;
+          }
+
+          .temperature {
+            font-size: 1.5rem;
+          }
+        }
+
+        .city {
+          font-size: 0.9rem;
+          margin-top: -5px;
+        }
+      }
+    }
+
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 1.5em;
+      font-weight: 400;
+    }
+
+    .bottom-section {
+      .img-author {
+        font-size: 0.8rem;
+      }
+
+      a {
+        .todo-list-icon {
+          width: 50px;
         }
       }
     }
