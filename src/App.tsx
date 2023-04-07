@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import bg from "./assets/placeholder_img.jpeg";
 import dogecoinIcon from "./assets/dogecoin-icon.png";
+import todoListIcon from "./assets/todo-list-icon.png";
 import "./App.scss";
 
 function App() {
@@ -138,7 +139,16 @@ function App() {
           hour12: false,
         })}
       </h1>
-      <div className="img-author">Image author: Jane Doe</div>
+      <div className="bottom-section">
+        <div className="img-author">Image author: Jane Doe</div>
+        <a href="https://rimasem.github.io/todo-list/" target="_blank">
+          <img
+            className="todo-list-icon"
+            src={todoListIcon}
+            alt="todo list icon"
+          />
+        </a>
+      </div>
     </div>
   );
 }
