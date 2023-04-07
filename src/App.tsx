@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import bg from "./assets/placeholder_img.jpeg";
+import dogecoinIcon from "./assets/dogecoin-icon.png";
 import "./App.scss";
 
 function App() {
@@ -47,10 +48,6 @@ function App() {
         return res.json();
       })
       .then((data) => {
-        (document.querySelector(".dogecoin-img") as HTMLImageElement).src =
-          data.image.small;
-        (document.querySelector(".dogecoin-name") as HTMLElement).textContent =
-          data.name;
         (
           document.querySelector(".dogecoin-current") as HTMLElement
         ).textContent = "🎯 €" + data.market_data.current_price.eur;
@@ -115,8 +112,12 @@ function App() {
       <div className="crypto-weather-container">
         <div className="crypto-wrapper">
           <div className="crypto-top-section">
-            <img className="dogecoin-img" src="" alt="dogecoin logo" />
-            <p className="dogecoin-name"></p>
+            <img
+              className="dogecoin-img"
+              src={dogecoinIcon}
+              alt="dogecoin logo"
+            />
+            <p className="dogecoin-name">Dogecoin</p>
           </div>
           <p className="price dogecoin-current"></p>
           <p className="price dogecoin-highest"></p>
