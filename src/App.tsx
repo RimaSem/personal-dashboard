@@ -1,12 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, KeyboardEvent } from "react";
 import bg from "./assets/placeholder_img.jpeg";
 import dogecoinIcon from "./assets/dogecoin-icon.png";
 import todoListIcon from "./assets/todo-list-icon.png";
+import { Icon } from "@mdi/react";
+import { mdiMagnify } from "@mdi/js";
 import "./App.scss";
 
 function App() {
   const [time, setTime] = useState(new Date());
   const APIkey = "13e50692f650e4663cbb5ad7302e4d31";
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Refresh current time at interval of 1 second
   useEffect(() => {
@@ -108,6 +111,12 @@ function App() {
     });
   }, []);
 
+  function handleSearch(e: KeyboardEvent) {
+    if (e.key === "Enter" && inputRef.current) {
+      window.open("http://www.google.cm/search?q=" + inputRef.current.value);
+    }
+  }
+
   return (
     <div className="App">
       <div className="crypto-weather-container">
@@ -140,11 +149,28 @@ function App() {
             hour12: false,
           })}
         </h1>
-        <input
-          className="search"
-          name="search"
-          placeholder="Search Google"
-        ></input>
+        <div className="search-wrapper">
+          <input
+            ref={inputRef}
+            onKeyDown={handleSearch}
+            className="search"
+            name="search"
+            placeholder="Search Google"
+            autoFocus
+          />
+          <div
+            className="icon-wrapper"
+            onClick={() => {
+              if (inputRef.current) {
+                window.open(
+                  "http://www.google.cm/search?q=" + inputRef.current.value
+                );
+              }
+            }}
+          >
+            <Icon className="search-icon" path={mdiMagnify} />
+          </div>
+        </div>
       </div>
       <div className="bottom-section">
         <div className="img-author">Image author: Jane Doe</div>
