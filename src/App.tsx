@@ -22,26 +22,37 @@ function App() {
 
   // Get background image and image author
   useEffect(() => {
-    (
-      document.querySelector(".container") as HTMLElement
-    ).style.backgroundImage = `url(${bg})`;
-    (
-      document.querySelector(".img-author") as HTMLDivElement
-    ).textContent = `Image author: Jane Doe`;
-
-    //   // fetch(
-    //   //   "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature"
-    //   // )
-    //   //   .then((res) => res.json())
-    //   //   .then((data) => {
-    //   //     (
-    //   //       document.querySelector(".App") as HTMLElement
-    //   //     ).style.backgroundImage = `url(${data.urls.regular})`;
-    //   //     (
-    //   //       document.querySelector(".img-author") as HTMLDivElement
-    //   //     ).textContent = `Image author: ${data.user.name}`;
-    //   //      setPageLoading(prev => prev + 1)
-    //   //   });
+    fetch(
+      "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature"
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("Oh no... something went wrong");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        (
+          document.querySelector(".container") as HTMLElement
+        ).style.backgroundImage = `url(${data.urls.full})`;
+        (
+          document.querySelector(".img-author") as HTMLDivElement
+        ).textContent = `Image author: ${data.user.name}`;
+      })
+      .then((data) => {
+        setTimeout(() => {
+          setLoaded(true);
+        }, 1500);
+      })
+      .catch((err) => {
+        (
+          document.querySelector(".container") as HTMLElement
+        ).style.backgroundImage = `url(${bg})`;
+        console.log(err);
+        setTimeout(() => {
+          setLoaded(true);
+        }, 1500);
+      });
   }, []);
 
   // Get crypto data
@@ -92,7 +103,7 @@ function App() {
             document.querySelector(".temperature") as HTMLImageElement
           ).textContent = `${Math.round(+data.list[0].main.temp)}°`;
           fetch(
-            `http://api.openweathermap.org/geo/1.0/reverse?lat=55.6859392&lon=21.1484672&limit=5&appid=13e50692f650e4663cbb5ad7302e4d31`
+            `https://api.openweathermap.org/geo/1.0/reverse?lat=55.6859392&lon=21.1484672&limit=5&appid=13e50692f650e4663cbb5ad7302e4d31`
           )
             .then((res) => {
               if (!res.ok) {
@@ -104,13 +115,10 @@ function App() {
               (
                 document.querySelector(".city") as HTMLImageElement
               ).textContent = yourCity[0].name;
-              setLoaded(true);
             })
             .catch((err) => console.log(err));
-          setLoaded(true);
         })
         .catch((err) => console.log(err));
-      setLoaded(true);
     });
   }, []);
 
