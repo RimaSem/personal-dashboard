@@ -132,13 +132,20 @@ function App() {
           <p className="city"></p>
         </div>
       </div>
-      <h1>
-        {time.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-        })}
-      </h1>
+      <div className="mid-section">
+        <h1>
+          {time.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+          })}
+        </h1>
+        <input
+          className="search"
+          name="search"
+          placeholder="Search Google"
+        ></input>
+      </div>
       <div className="bottom-section">
         <div className="img-author">Image author: Jane Doe</div>
         <a href="https://rimasem.github.io/todo-list/" target="_blank">
