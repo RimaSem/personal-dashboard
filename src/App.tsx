@@ -8,6 +8,7 @@ import "./App.scss";
 
 function App() {
   const [time, setTime] = useState(new Date());
+  const [loaded, setLoaded] = useState(false);
   const APIkey = "13e50692f650e4663cbb5ad7302e4d31";
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -22,24 +23,25 @@ function App() {
   // Get background image and image author
   useEffect(() => {
     (
-      document.querySelector(".App") as HTMLElement
+      document.querySelector(".container") as HTMLElement
     ).style.backgroundImage = `url(${bg})`;
     (
       document.querySelector(".img-author") as HTMLDivElement
     ).textContent = `Image author: Jane Doe`;
 
-    // fetch(
-    //   "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature"
-    // )
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     (
-    //       document.querySelector(".App") as HTMLElement
-    //     ).style.backgroundImage = `url(${data.urls.regular})`;
-    //     (
-    //       document.querySelector(".img-author") as HTMLDivElement
-    //     ).textContent = `Image author: ${data.user.name}`;
-    //   });
+    //   // fetch(
+    //   //   "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature"
+    //   // )
+    //   //   .then((res) => res.json())
+    //   //   .then((data) => {
+    //   //     (
+    //   //       document.querySelector(".App") as HTMLElement
+    //   //     ).style.backgroundImage = `url(${data.urls.regular})`;
+    //   //     (
+    //   //       document.querySelector(".img-author") as HTMLDivElement
+    //   //     ).textContent = `Image author: ${data.user.name}`;
+    //   //      setPageLoading(prev => prev + 1)
+    //   //   });
   }, []);
 
   // Get crypto data
@@ -83,7 +85,6 @@ function App() {
           return res.json();
         })
         .then((data) => {
-          console.log(data);
           (
             document.querySelector(".weather-icon") as HTMLImageElement
           ).src = `https://openweathermap.org/img/wn/${data.list[0].weather[0].icon}@4x.png`;
@@ -99,15 +100,17 @@ function App() {
               }
               return res.json();
             })
-            .then(
-              (yourCity) =>
-                ((
-                  document.querySelector(".city") as HTMLImageElement
-                ).textContent = yourCity[0].name)
-            )
+            .then((yourCity) => {
+              (
+                document.querySelector(".city") as HTMLImageElement
+              ).textContent = yourCity[0].name;
+              setLoaded(true);
+            })
             .catch((err) => console.log(err));
+          setLoaded(true);
         })
         .catch((err) => console.log(err));
+      setLoaded(true);
     });
   }, []);
 
@@ -119,68 +122,71 @@ function App() {
 
   return (
     <div className="App">
-      <div className="crypto-weather-container">
-        <div className="crypto-wrapper">
-          <div className="crypto-top-section">
-            <img
-              className="dogecoin-img"
-              src={dogecoinIcon}
-              alt="dogecoin logo"
+      {!loaded && <div className="loader">Loading...</div>}
+      <div className="container">
+        <div className="crypto-weather-container">
+          <div className="crypto-wrapper">
+            <div className="crypto-top-section">
+              <img
+                className="dogecoin-img"
+                src={dogecoinIcon}
+                alt="dogecoin logo"
+              />
+              <p className="dogecoin-name">Dogecoin</p>
+            </div>
+            <p className="price dogecoin-current"></p>
+            <p className="price dogecoin-highest"></p>
+            <p className="price dogecoin-lowest"></p>
+          </div>
+          <div className="weather-wrapper">
+            <div className="weather-top">
+              <img src="" className="weather-icon" alt="weather icon" />
+              <p className="temperature"></p>
+            </div>
+            <p className="city"></p>
+          </div>
+        </div>
+        <div className="mid-section">
+          <h1>
+            {time.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })}
+          </h1>
+          <div className="search-wrapper">
+            <input
+              ref={inputRef}
+              onKeyDown={handleSearch}
+              className="search"
+              name="search"
+              placeholder="Search Google"
+              autoFocus
             />
-            <p className="dogecoin-name">Dogecoin</p>
-          </div>
-          <p className="price dogecoin-current"></p>
-          <p className="price dogecoin-highest"></p>
-          <p className="price dogecoin-lowest"></p>
-        </div>
-        <div className="weather-wrapper">
-          <div className="weather-top">
-            <img src="" className="weather-icon" alt="weather icon" />
-            <p className="temperature"></p>
-          </div>
-          <p className="city"></p>
-        </div>
-      </div>
-      <div className="mid-section">
-        <h1>
-          {time.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false,
-          })}
-        </h1>
-        <div className="search-wrapper">
-          <input
-            ref={inputRef}
-            onKeyDown={handleSearch}
-            className="search"
-            name="search"
-            placeholder="Search Google"
-            autoFocus
-          />
-          <div
-            className="icon-wrapper"
-            onClick={() => {
-              if (inputRef.current) {
-                window.open(
-                  "http://www.google.cm/search?q=" + inputRef.current.value
-                );
-              }
-            }}
-          >
-            <Icon className="search-icon" path={mdiMagnify} />
+            <div
+              className="icon-wrapper"
+              onClick={() => {
+                if (inputRef.current) {
+                  window.open(
+                    "http://www.google.cm/search?q=" + inputRef.current.value
+                  );
+                }
+              }}
+            >
+              <Icon className="search-icon" path={mdiMagnify} />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="bottom-section">
-        <div className="img-author">Image author: Jane Doe</div>
-        <a href="https://rimasem.github.io/todo-list/" target="_blank">
-          <img
-            className="todo-list-icon"
-            src={todoListIcon}
-            alt="todo list icon"
-          />
-        </a>
+        <div className="bottom-section">
+          <div className="img-author">Image author: Jane Doe</div>
+          <a href="https://rimasem.github.io/todo-list/" target="_blank">
+            <img
+              className="todo-list-icon"
+              src={todoListIcon}
+              alt="todo list icon"
+            />
+          </a>
+        </div>
       </div>
     </div>
   );
