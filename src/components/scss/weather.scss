@@ -1,0 +1,42 @@
+.weather-wrapper {
+  .weather-top {
+    display: flex;
+    align-items: center;
+
+    .weather-icon {
+      width: 70px;
+    }
+
+    .temperature {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+  }
+
+  .city {
+    padding: 0;
+    margin: 0;
+    font-size: 1.3rem;
+    text-align: right;
+    margin-top: -10px;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .weather-wrapper {
+    .weather-top {
+      .weather-icon {
+        width: 40px;
+      }
+
+      .temperature {
+        font-size: 1.5rem;
+      }
+    }
+
+    .city {
+      font-size: 0.9rem;
+      margin-top: -5px;
+    }
+  }
+}
