@@ -10,6 +10,7 @@
     width: 100%;
     height: 100%;
     background-color: white;
+    z-index: 100;
   }
 
   .container {
@@ -21,7 +22,7 @@
     background-size: cover;
     display: flex;
     flex-direction: column;
-    padding: 1em;
+    padding: 1rem;
 
     .crypto-weather-container {
       display: flex;
@@ -43,19 +44,19 @@
         align-items: center;
         justify-content: center;
         margin: 0 auto;
-        margin-bottom: 5em;
+        margin-bottom: 5rem;
         max-width: 500px;
         width: 90%;
+        position: relative;
 
         .search {
           max-width: 500px;
           width: 90%;
-          height: 2.7em;
+          height: 2.7rem;
           border: none;
-          border-top-left-radius: 20px;
-          border-end-start-radius: 20px;
+          border-radius: 20px;
           box-shadow: 3px 1px 6px rgba(0, 0, 0, 0.58);
-          padding-left: 1em;
+          padding-left: 1rem;
           font-family: inherit;
           font-size: 1rem;
 
@@ -68,14 +69,21 @@
           border-end-end-radius: 20px;
           border-top-right-radius: 20px;
           background-color: white;
-          height: 2.7em;
+          height: 43px;
           cursor: pointer;
+          position: absolute;
+          right: 0;
+          display: flex;
 
           .search-icon {
             color: rgb(117, 117, 117);
             right: 2.5em;
-            height: 2.7em;
+            height: 38px;
             padding: 6px 10px 6px 6px;
+            display: flex;
+            position: inherit;
+            right: 29px;
+            bottom: 2px;
           }
         }
       }
@@ -87,6 +95,7 @@
       margin-top: auto;
 
       .img-author {
+        font-size: 1rem;
         font-weight: 300;
         align-self: flex-end;
         padding: 0;
@@ -118,7 +127,7 @@
         }
 
         .search-wrapper {
-          margin-bottom: 2em;
+          margin-bottom: 2rem;
         }
       }
 

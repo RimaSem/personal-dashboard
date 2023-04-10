@@ -1,13 +1,15 @@
 .crypto-wrapper {
+  font-size: 1rem;
+
   .crypto-top-section {
     display: flex;
     align-items: center;
-    gap: 0.7em;
-    margin-bottom: 0.5em;
+    gap: 0.7rem;
+    margin-bottom: 0.5rem;
     color: rgb(234, 214, 99);
 
     .dogecoin-img {
-      width: 5em;
+      width: 5rem;
     }
 
     .dogecoin-name {
@@ -17,7 +19,7 @@
   }
 
   .price {
-    margin: 0.2em 0 0 0;
+    margin: 0.2rem 0 0 0;
   }
 }
 
@@ -26,7 +28,7 @@
     font-size: 0.9rem;
     .crypto-top-section {
       .dogecoin-img {
-        width: 2.5em;
+        width: 2.5rem;
       }
 
       .dogecoin-name {
